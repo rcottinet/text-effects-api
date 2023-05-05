@@ -27,13 +27,15 @@ export class AppService {
    * @return generated string command
    */
   private generateFFmpegCommand(videoEffectDto: VideoEffectDto): string {
-    return `ffmpeg -i ${videoEffectDto.input_video_path} -vf
-    drawtext="enable='between(t,${videoEffectDto.effect.start_time},${videoEffectDto.effect.end_time})'
-    :text='${videoEffectDto.effect.text_string}'
-    :fontcolor=${videoEffectDto.effect.font_color}
-    :fontsize=${videoEffectDto.effect.font_size}
-    :x=${videoEffectDto.effect.position.x}
-    :y=${videoEffectDto.effect.position.y}"
-    ${videoEffectDto.output_video_path}`;
+    return (
+      `ffmpeg -i ${videoEffectDto.input_video_path} -vf ` +
+      `drawtext="enable='between(t,${videoEffectDto.effect.start_time},${videoEffectDto.effect.end_time})'` +
+      `:text='${videoEffectDto.effect.text_string}'` +
+      `:fontcolor=${videoEffectDto.effect.font_color}` +
+      `:fontsize=${videoEffectDto.effect.font_size}` +
+      `:x=${videoEffectDto.effect.position.x}` +
+      `:y=${videoEffectDto.effect.position.y}"` +
+      ` ${videoEffectDto.output_video_path}`
+    );
   }
 }

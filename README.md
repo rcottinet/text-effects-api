@@ -12,13 +12,13 @@ $ npm install
 
 ## Running the app
 
-````bash
+```bash
 # development
 $ npm run start
 
 # watch mode
 $ npm run start:dev
-
+```
 
 Try the following command :
 
@@ -45,8 +45,6 @@ curl --request POST \
 }'
 ```
 
-
-
 ## Test
 
 ```bash
@@ -55,4 +53,4 @@ $ npm run test
 
 # test coverage
 $ npm run test:cov
-````
+```

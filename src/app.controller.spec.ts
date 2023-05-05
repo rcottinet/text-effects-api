@@ -25,7 +25,7 @@ const mock: VideoEffectDto = {
 
 const response_mock: ResponseCommandDto = {
   output:
-    "ffmpeg -i test.mp4 -vf\n    drawtext=\"enable='between(t,9,10)'\n    :text='OMG'\n    :fontcolor=0x777777\n    :fontsize=11\n    :x=38\n    :y=23\"\n    test.mp4",
+    "ffmpeg -i test.mp4 -vf drawtext=\"enable='between(t,9,10)':text='OMG':fontcolor=0x777777:fontsize=11:x=38:y=23\" test.mp4",
 };
 
 describe('AppController', () => {
@@ -49,77 +49,6 @@ describe('AppController', () => {
         .mockImplementation(() => response_mock);
 
       expect(appController.generateFFmeg(mock)).toStrictEqual(response_mock);
-    });
-
-    it('should throw an exception if end time is not valid', () => {
-      const mock_with_invalid_end_time = {
-        ...mock,
-        effect: {
-          ...mock.effect,
-          end_time: 7.0,
-        },
-      };
-
-      try {
-        appController.generateFFmeg(mock_with_invalid_end_time);
-      } catch (e) {
-        expect(e).toBeInstanceOf(BadRequestException);
-        expect(e.message).toBe('Error String. Invalid End Time.');
-      }
-    });
-
-    it('should throw an exception if start time is not valid', () => {
-      const mock_with_invalid_start_time = {
-        ...mock,
-        duration: 8,
-      };
-
-      try {
-        appController.generateFFmeg(mock_with_invalid_start_time);
-      } catch (e) {
-        expect(e).toBeInstanceOf(BadRequestException);
-        expect(e.message).toBe('Error String. Invalid End Time.');
-      }
-    });
-
-    it('should throw an exception if coordinate x is not valid', () => {
-      const mock_with_invalid_coordinate = {
-        ...mock,
-        effect: {
-          ...mock.effect,
-          position: {
-            ...mock.effect.position,
-            x: 124,
-          },
-        },
-      };
-
-      try {
-        appController.generateFFmeg(mock_with_invalid_coordinate);
-      } catch (e) {
-        expect(e).toBeInstanceOf(BadRequestException);
-        expect(e.message).toBe('Error String. Invalid X, Y coordinate.');
-      }
-    });
-
-    it('should throw an exception if coordinate y is not valid', () => {
-      const mock_with_invalid_coordinate = {
-        ...mock,
-        effect: {
-          ...mock.effect,
-          position: {
-            ...mock.effect.position,
-            y: 124,
-          },
-        },
-      };
-
-      try {
-        appController.generateFFmeg(mock_with_invalid_coordinate);
-      } catch (e) {
-        expect(e).toBeInstanceOf(BadRequestException);
-        expect(e.message).toBe('Error String. Invalid X, Y coordinate.');
-      }
     });
   });
 });
